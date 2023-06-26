@@ -1,0 +1,91 @@
+ .
+├──  flake.lock
+├──  flake.nix
+├──  hosts
+│  ├──  default.nix
+│  └──  jsw-laptop
+│     ├──  default.nix
+│     ├──  hardware-configuration.nix
+│     └──  settings.nix
+├──  lib
+├──  modules
+│  ├──  core
+│  │  ├──  boot.nix
+│  │  ├──  cpu
+│  │  │  ├──  default.nix
+│  │  │  ├──  intel.nix
+│  │  │  └──  settings.nix
+│  │  ├──  date.nix
+│  │  ├──  default.nix
+│  │  ├──  graphics
+│  │  │  ├──  default.nix
+│  │  │  ├──  intel.nix
+│  │  │  ├──  nvidia.nix
+│  │  │  └──  settings.nix
+│  │  ├──  immutable.nix
+│  │  ├──  networking
+│  │  │  ├──  bluetooth.nix
+│  │  │  ├──  default.nix
+│  │  │  ├──  networkmanager.nix
+│  │  │  └──  settings.nix
+│  │  ├──  nix.nix
+│  │  ├──  packages.nix
+│  │  ├──  security.nix
+│  │  ├──  settings.nix
+│  │  └──  user.nix
+│  ├──  default.nix
+│  ├──  desktop
+│  │  ├──  applications
+│  │  │  └──  default.nix
+│  │  ├──  base
+│  │  │  ├──  default.nix
+│  │  │  ├──  fonts.nix
+│  │  │  ├──  pipewire.nix
+│  │  │  └──  polkit.nix
+│  │  ├──  default.nix
+│  │  ├──  shell
+│  │  │  ├──  bar
+│  │  │  │  ├──  default.nix
+│  │  │  │  └──  waybar.nix
+│  │  │  ├──  browser
+│  │  │  │  ├──  default.nix
+│  │  │  │  └──  firefox.nix
+│  │  │  ├──  default.nix
+│  │  │  ├──  greeter
+│  │  │  │  ├──  default.nix
+│  │  │  │  └──  gtkgreet.nix
+│  │  │  ├──  lock
+│  │  │  │  ├──  default.nix
+│  │  │  │  └──  gtklock.nix
+│  │  │  ├──  notif
+│  │  │  │  ├──  default.nix
+│  │  │  │  └──  dunst.nix
+│  │  │  ├──  runner
+│  │  │  │  ├──  anyrun.nix
+│  │  │  │  └──  default.nix
+│  │  │  ├──  settings.nix
+│  │  │  └──  terminal
+│  │  │     ├──  default.nix
+│  │  │     └──  kitty.nix
+│  │  ├──  theme
+│  │  │  ├──  colorchemes
+│  │  │  │  └──  catpuccin-frappe.nix
+│  │  │  ├──  colors.nix
+│  │  │  ├──  current_wallpaper -> wallpapers/mystery-shack.jpg
+│  │  │  ├──  default.nix
+│  │  │  ├──  toolkits.nix
+│  │  │  └──  wallpapers
+│  │  │     └──  mystery-shack.jpg
+│  │  └──  wm
+│  │     ├──  default.nix
+│  │     ├──  hyprland.nix
+│  │     └──  settings.nix
+│  └──  server
+│     └──  default.nix
+├──  pkgs
+├──  README.md
+├──  secrets
+│  ├──  default.nix
+│  ├──  jswPass.age
+│  └──  secrets.nix
+└──  temp.txt

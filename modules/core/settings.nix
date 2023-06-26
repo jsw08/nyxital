@@ -10,7 +10,7 @@ in {
       default = "jsw";
       example = "jurnw";
     };
-    device = {
+    device = mkOption {
       type = enum [
         "laptop"
         "desktop"

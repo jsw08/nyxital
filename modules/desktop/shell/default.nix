@@ -3,10 +3,8 @@ _: {
     ./bar
     ./browser
     ./greeter
-    ./lock
-    ./notif
     ./runner
-    ./terminal
     ./settings.nix
+    ./terminal
   ];
 }

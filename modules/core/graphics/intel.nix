@@ -24,6 +24,7 @@ in {
       vulkan-validation-layers
       libva
       libva-utils
+      intel-gpu-tools
     ];
 
     hardware.opengl = {

@@ -29,10 +29,6 @@ in {
   programs.fish.enable = true;
 
   home-manager = {
-    osConfig,
-    inputs,
-    ...
-  }: {
     useGlobalPkgs = true;
     useUserPackages = true;
     extraSpecialArgs = {
@@ -41,7 +37,7 @@ in {
     users.${username} = {
       home.username = "${username}";
       home.homeDirectory = "/home/${username}/";
-      home.stateVersion = osConfig.system.stateVersion;
+      home.stateVersion = config.system.stateVersion;
       home.sessionVariables = {
         #for some raeson not defined automatically smh
         XDG_CONFIG_HOME = "/home/${username}/.config";

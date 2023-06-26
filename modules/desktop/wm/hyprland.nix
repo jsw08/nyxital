@@ -9,13 +9,20 @@
   username = config.core.username;
   device = config.core.device;
   gpu = config.core.graphics;
+  hyprland = inputs.hyprland.packages.${pkgs.system}.hyprland;
 
   compDevices = ["laptop" "desktop"];
   nvidiaGpu = ["hybrid-in" "nvidia"];
-
-  hyprland = inputs.hyprland.packages.${pkgs.system}.hyprland;
   mkIf = lib.mkIf;
-  mkForce = lib.mkForce;
+  exe = lib.getExe;
+  optStr = lib.opionalString;
+
+  hm = config.home-manager.users.${username};
+  inherit (hm.colorscheme) colors;
+  pointer = hm.home.pointerCursor;
+  shell = config.desktop.shell;
+  grimblast = inputs.hyprland.programs.${pkgs.system}.grimblast;
+  bluetooth = config.core.bluetooth.enable;
 in {
   imports = [
     inputs.hyprland.nixosModules.default
@@ -26,31 +33,12 @@ in {
       enable = cfg;
       nvidiaPatches = builtins.elem gpu nvidiaGpu;
     };
-    desktop.isDe = mkForce false;
 
     home-manager.users.${username} = {
-      config,
-      pkgs,
-      lib,
-      inputs,
-      osConfig,
-      ...
-    }: let
-      hyprland = osConfig.programs.hyprland;
-      inherit (config.colorscheme) colors;
-      pointer = config.home.pointerCursor;
-      shell = osConfig.desktop.shell;
-      grimblast = inputs.hyprland.programs.${pkgs.system}.grimblast;
-
-      bluetooth = osConfig.core.bluetooth.enable;
-
-      exe = lib.getExe;
-      optStr = lib.opionalString;
-    in {
       imports = [inputs.hyprland.nixosModules.default];
       wayland.windowManager.hyprland = {
-        enable = hyprland.enable; # TODO: Configure MPV
-        nvidiaPatches = hyprland.nvidiaPatches; # TODO: Rice wlogout + config to use selected lock
+        enable = config.programs.hyprland.enable; # TODO: Configure MPV
+        nvidiaPatches = config.programs.hyprland.nvidiaPatches; # TODO: Rice wlogout + config to use selected lock
         extraConfig = ''
           # Cursor
           exec-once = hyprctl setcursor ${pointer.name} ${builtins.toString pointer.size}
@@ -104,7 +92,7 @@ in {
           $M = ALT
 
           # Logout and shell
-          bind $M, Escape, exec ${exe shell.lock}
+          bind $M, Escape, exec ${exe pkgs.gtklock}
           bind $M_SHIFT, Escape, exec ${exe pkgs.wlogout} -p layer-shell
           bind $M_SHIFT, Return, exec ${exe shell.browser}
           bind $M_SHIFT_CTRL, l, exec ${exe shell.lock}

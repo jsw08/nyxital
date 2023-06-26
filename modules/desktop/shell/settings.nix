@@ -27,18 +27,6 @@ in {
       default = pkgs.greetd.gtkgreet;
       example = pkgs.greetd.gtkgreet;
     };
-    lock = mkOption {
-      type = types.enum [pkgs.gtklock];
-      description = "What locker to install";
-      default = pkgs.gtklock;
-      example = pkgs.gtklock;
-    };
-    notif = mkOption {
-      type = types.enum [pkgs.dunst];
-      description = "What notify service to install";
-      default = pkgs.dunst;
-      example = pkgs.dunst;
-    };
     runner = mkOption {
       type = types.enum [anyrun];
       description = "What application runner to install";

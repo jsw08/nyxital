@@ -1,6 +1,8 @@
 _: {
   imports = [
     ./boot.nix
+    ./cpu
+    ./date.nix
     ./graphics
     ./immutable.nix
     ./networking

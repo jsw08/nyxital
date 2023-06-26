@@ -1,5 +1,9 @@
 {inputs, ...}: {
   imports = [inputs.agenix.nixosModules.default];
 
-  age.secrets.jswPass.file = "./jswPass.age";
+  services.openssh = {
+    enable = true;
+    openFirewall = false;
+  };
+  age.secrets.jswPass.file = ./jswPass.age;
 }

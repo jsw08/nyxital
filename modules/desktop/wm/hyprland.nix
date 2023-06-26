@@ -15,13 +15,13 @@
   nvidiaGpu = ["hybrid-in" "nvidia"];
   mkIf = lib.mkIf;
   exe = lib.getExe;
-  optStr = lib.opionalString;
+  optStr = lib.optionalString;
 
   hm = config.home-manager.users.${username};
   inherit (hm.colorscheme) colors;
   pointer = hm.home.pointerCursor;
   shell = config.desktop.shell;
-  grimblast = inputs.hyprland.programs.${pkgs.system}.grimblast;
+  grimblast = inputs.hyprland-contrib.packages.${pkgs.system}.grimblast;
   bluetooth = config.core.bluetooth.enable;
 in {
   imports = [
@@ -35,7 +35,7 @@ in {
     };
 
     home-manager.users.${username} = {
-      imports = [inputs.hyprland.nixosModules.default];
+      imports = [inputs.hyprland.homeManagerModules.default];
       wayland.windowManager.hyprland = {
         enable = config.programs.hyprland.enable; # TODO: Configure MPV
         nvidiaPatches = config.programs.hyprland.nvidiaPatches; # TODO: Rice wlogout + config to use selected lock
@@ -95,7 +95,6 @@ in {
           bind $M, Escape, exec ${exe pkgs.gtklock}
           bind $M_SHIFT, Escape, exec ${exe pkgs.wlogout} -p layer-shell
           bind $M_SHIFT, Return, exec ${exe shell.browser}
-          bind $M_SHIFT_CTRL, l, exec ${exe shell.lock}
           bind $M, d, exec ${exe shell.runner}
           bind $M, Return, exec ${exe shell.terminal}
 

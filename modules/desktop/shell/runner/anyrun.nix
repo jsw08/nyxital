@@ -22,7 +22,7 @@ in {
         plugins = with inputs.anyrun.packages.${pkgs.system}; [
           applications
           rink
-          shell
+          inputs.anyrun.packages.${pkgs.system}.shell
           symbols
           translate
         ];

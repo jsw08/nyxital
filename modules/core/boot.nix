@@ -8,19 +8,9 @@
   server = "server" == device;
 
   mkIf = lib.mkIf;
-  mkDefault = lib.mkDefault;
-
-  serverKernel = pkgs.linuxKernel.kernels.linux_hardened;
-  kernel = pkgs.linux-rt_latest;
 in {
   config.boot = {
-    kernelPackages =
-      mkDefault
-      (
-        if server
-        then serverKernel
-        else kernel
-      );
+    kernelPackages = pkgs.linuxKernel.rtPackages.linux_rt_6_1;
     plymouth.enable = !server;
 
     kernelParams = mkIf (!server) ["quiet" "udev.log_level=3"];

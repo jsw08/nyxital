@@ -10,7 +10,7 @@
 
   mkIf = lib.mkIf;
 
-  inherit (config.home-manager.${username}.colorscheme) colors;
+  inherit (config.home-manager.users.${username}.colorscheme) colors;
 in {
   imports = [inputs.home-manager.nixosModules.home-manager];
   config.home-manager.users.${username}.services.dunst = mkIf (builtins.elem device compDevices) {

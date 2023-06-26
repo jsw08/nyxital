@@ -5,7 +5,7 @@
 }: {
   # Set the default installed packages. Replaces nano with vi.
   environment.defaultPackages = with pkgs; [
-    vi
+    neovim
     curl
     w3m
     inputs.agenix.packages.${pkgs.system}.default

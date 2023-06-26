@@ -23,7 +23,7 @@
   terminal = config.desktop.shell.runner;
   inherit (hm.colorscheme) colors;
 
-  optStr = lib.opionalString;
+  optStr = lib.optionalString;
   exe = lib.getExe;
 in {
   imports = [inputs.home-manager.nixosModules.home-manager];
@@ -31,7 +31,7 @@ in {
     enable = true;
     package = package;
     systemd.enable = true;
-    config = {
+    settings = {
       main = {
         position = "left";
         layer = "top";

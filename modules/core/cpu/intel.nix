@@ -3,7 +3,7 @@
   lib,
   ...
 }: let
-  cpu = config.cpu;
+  cpu = config.core.cpu;
   mkIf = lib.mkIf;
 in {
   config = mkIf (cpu == "intel") {

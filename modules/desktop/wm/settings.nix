@@ -5,11 +5,9 @@
   ...
 }: let
   mkOption = lib.mkOption;
-  mkEnableOption = lib.mkEnableOption;
 
   hyprland = inputs.hyprland.packages.${pkgs.system}.hyprland;
-  enum = lib.enum;
-  boolean = lib.boolean;
+  enum = lib.types.enum;
 in {
   options.desktop.wm = mkOption {
     type = enum [hyprland];

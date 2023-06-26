@@ -7,10 +7,11 @@
 }: let
   device = config.core.device;
   compDevices = ["laptop" "desktop"];
+  username = config.core.username;
 
   mkIf = lib.mkIf;
 
-  inherit (config.colorscheme) colors;
+  hm = config.home-manager.users.${username};
   inherit (inputs.nix-colors.lib-contrib {inherit pkgs;}) gtkThemeFromScheme;
 in {
   imports = [
@@ -20,8 +21,8 @@ in {
     gtk = {
       enable = true;
       theme = {
-        name = colors.slug;
-        package = gtkThemeFromScheme {scheme = colors;};
+        name = hm.colorscheme.slug;
+        package = gtkThemeFromScheme {scheme = hm.colorscheme;};
       };
       iconTheme = {
         package = pkgs.vimix-icon-theme;

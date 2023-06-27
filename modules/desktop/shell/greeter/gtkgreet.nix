@@ -9,13 +9,12 @@
   compDevices = ["laptop" "desktop"];
   shell = config.desktop.shell;
   username = config.core.username;
-  wm = config.dekstop.wm;
-  anyrun = inputs.anyrun.packages.${pkgs.system}.anyrun;
+  wm = config.desktop.wm;
 
   mkIf = lib.mkIf;
   exe = lib.getExe;
 in {
-  config = mkIf (shell.greeter == anyrun && builtins.elem device compDevices) {
+  config = mkIf (shell.greeter == pkgs.greetd.gtkgreet && builtins.elem device compDevices) {
     services.greetd = {
       enable = true;
       settings = {

@@ -19,4 +19,14 @@ in {
       ++ shared;
     specialArgs = {inherit inputs self;};
   };
+  jsw-vm = inputs.nixpkgs.lib.nixosSystem {
+    system = "x86_64-linux";
+    modules =
+      [
+        {networking.hostName = "jsw-vm";}
+        ./jsw-vm
+      ]
+      ++ shared;
+    specialArgs = {inherit inputs self;};
+  };
 }

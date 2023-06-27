@@ -14,7 +14,7 @@
   anyrun = inputs.anyrun.packages.${pkgs.system}.anyrun;
 in {
   imports = [inputs.home-manager.nixosModules.home-manager];
-  home-manager.users.${username} = mkIf (shell.runner == anyrun && builtins.elem device compDevices) {
+  config.home-manager.users.${username} = mkIf (shell.runner == anyrun && builtins.elem device compDevices) {
     imports = [inputs.anyrun.homeManagerModules.default];
     programs.anyrun = {
       enable = true;

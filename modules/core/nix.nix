@@ -34,6 +34,10 @@ in {
 
   nix = {
     registry = mappedRegistry // {default = mappedRegistry.nixpkgs;}; # Make the `nix` command use the same nixpkgs as this flake.
+    gc = {
+      automatic = true;
+      dates = "weekly";
+    };
     settings = {
       flake-registry = "/etc/nix/registry.json"; # specify the path to the nix registry
       min-free = "${toString (5 * 1024 * 1024 * 1024)}"; # Free up 20gb when only 5gb left
@@ -53,11 +57,6 @@ in {
         "recursive-nix"
         "ca-derivations"
       ];
-
-      gc = {
-        automatic = true;
-        dates = "weekly";
-      };
 
       warn-dirty = false;
       http-connections = 0; # No limit on parallel fetching from binary cache

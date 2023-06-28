@@ -40,13 +40,13 @@ in {
         libvdpau-va-gl
       ];
 
-      extraPackages32 = with pkgs.pkgsi686Linux; [
-        intel-compute-runtime
-        intel-media-driver
-        vaapiIntel
-        vaapiVdpau
-        libvdpau-va-gl
-      ];
+      #      extraPackages32 = with pkgs.pkgsi686Linux; [
+      #        intel-compute-runtime
+      #        intel-media-driver
+      #        vaapiIntel
+      #        vaapiVdpau
+      #        libvdpau-va-gl
+      #      ];
     };
     environment.variables = mkIf (graphics != "hybrid-in") {
       VDPAU_DRIVER = "va_gl";

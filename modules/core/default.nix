@@ -5,6 +5,7 @@ _: {
     ./date.nix
     ./graphics
     ./immutable.nix
+    ./laptop.nix
     ./networking
     ./nix.nix
     ./packages.nix

@@ -25,7 +25,7 @@ in {
         prime.offload.enableOffloadCmd = graphics == "hybrid-in";
         powerManagement = {
           enable = true;
-          finegrained = graphics == "hybrid-in";
+          #finegrained = graphics == "hybrid-in";
         };
         nvidiaSettings = false; # useless on wayland, and for my devices in general
       };

@@ -22,7 +22,7 @@ in {
       example = pkgs.firefox-bin;
     };
     greeter = mkOption {
-      type = types.enum [pkgs.greetd.gtkgreet];
+      type = types.enum [pkgs.greetd.gtkgreet "none"];
       description = "What greeter to install";
       default = pkgs.greetd.gtkgreet;
       example = pkgs.greetd.gtkgreet;

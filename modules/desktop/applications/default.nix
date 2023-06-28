@@ -1,3 +1,3 @@
 _: {
-  imports = [./dunst.nix];
+  imports = [./dunst.nix ./nvim.nix];
 }

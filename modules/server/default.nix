@@ -1,1 +1,3 @@
-_: {}
+_: {
+  fonts.fontconfig.enable = false; #TODO: Move me to appropiate file
+}

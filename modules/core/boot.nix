@@ -5,7 +5,8 @@
   ...
 }: let
   device = config.core.device;
-  server = "server" == device;
+  #server = "server" == device;
+  server = true; # FIXME: REMOVE THIS, ONLY FOR DEBUGGING
 
   mkIf = lib.mkIf;
 in {

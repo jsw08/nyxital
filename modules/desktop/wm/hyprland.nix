@@ -37,33 +37,43 @@ in {
     home-manager.users.${username} = {
       imports = [inputs.hyprland.homeManagerModules.default];
       wayland.windowManager.hyprland = {
-        enable = config.programs.hyprland.enable; # TODO: Configure MPV
-        nvidiaPatches = config.programs.hyprland.nvidiaPatches; # TODO: Rice wlogout + config to use selected lock
-        extraConfig = ''
-          # Cursor
+        enable = config.programs.hyprland.enable;
+        nvidiaPatches = config.programs.hyprland.nvidiaPatches; # TODO: Rice wlogout
+        extraConfig = let
+          mpv-paste =
+            # TODO: Fix mpv and maybe config it
+            pkgs.writeShellScriptBin "mpv-paste" ''
+            '';
+        in ''
+          # Monitors
+          monitor = eDP-1,preferred,0x0,1
+          monitor = HDMI-A-2,preferred,1920x0,1
+
+          # Cursor and wallpaper
           exec-once = hyprctl setcursor ${pointer.name} ${builtins.toString pointer.size}
+          exec-once = ${exe pkgs.swaybg} -i ${../theme/current_wallpaper} -m fill
+          exec = ${exe shell.terminal}
 
           # General/eyecandy config
           general {
+            gaps_out = 10
             border_size = 2
-            col = {
-              active_border = rgb(${colors.base0F})
-              group_border_active = rgb(${colors.base0B})
-            }
+            col.active_border = 0xff${colors.base0F}
+            col.group_border_active = 0xff${colors.base0B}
+            layout = dwindle
           }
-          decoration = {
+          decoration {
             rounding = 10
-            active_opacity = 0.95
-            inactive_opacity = 0.85
-
             blur = yes
             blur_size = 4
             blur_passes = 2
             blur_new_optimizations = on
-
-            drop_shadow = 4
-            shadow_range = 3
-            col.shadow = rgba(292c3cee)
+            active_opacity = 0.95
+            inactive_opacity = 0.85
+            drop_shadow = yes
+            shadow_range = 8
+            shadow_render_power = 3
+            col.shadow = rgba(1a1a1aee)
           }
 
           # Animations
@@ -92,72 +102,76 @@ in {
           $M = ALT
 
           # Logout and shell
-          bind $M, Escape, exec ${exe pkgs.gtklock}
-          bind $M_SHIFT, Escape, exec ${exe pkgs.wlogout} -p layer-shell
-          bind $M_SHIFT, Return, exec ${exe shell.browser}
-          bind $M, d, exec ${exe shell.runner}
-          bind $M, Return, exec ${exe shell.terminal}
+          bind = $M, Escape, exec, ${exe pkgs.gtklock}
+          bind = $M_SHIFT, Escape, exec, ${exe pkgs.wlogout} -p layer-shell
+          bind = $M_SHIFT, Return, exec, firefox #FIXME: ${
+            if shell.browser == pkgs.firefox-bin
+            then exe hm.programs.firefox.package
+            else exe shell.browser
+          }
+          bind = $M, d, exec, ${exe shell.runner}
+          bind = $M, Return, exec, ${exe shell.terminal}
 
           # Config programs
-          bind $M, a, exec ${exe shell.terminal} ${exe pkgs.pulsemixer}
-          bind $M, n, exec ${exe shell.terminal} ${exe pkgs.networkmanager}/bin/nmtui
-          ${optStr bluetooth "bind $M, b, exec ${exe shell.terminal} ${exe pkgs.bluetuith}"}
+          bind = $M, a, exec, ${exe shell.terminal} ${exe pkgs.pulsemixer}
+          bind = $M, n, exec, ${exe shell.terminal} ${exe pkgs.networkmanager}/bin/nmtui
+          ${optStr bluetooth "bind = $M, b, exec, ${exe shell.terminal} ${exe pkgs.bluetuith}"}
 
           # Program binds
-          bind $M v, exec ${exe grimblast} copy area
-          bind $M_SHIFT d, exec ${exe pkgs.webcord-vencord}
-          bind $M w, exec ${exe pkgs.mpv} $(${pkgs.wl-clipboard}/bin/wl-paste)
+          bind = $M, v, exec, ${exe grimblast} copy area
+          bind = $M_SHIFT, d, exec, ${exe pkgs.webcord-vencord}
+          bind = $M, w, exec, ${exe mpv-paste}
 
           # Movement binds
-          bind = $main, Q, killactive
-          bind = $main, F, fullscreen
-          bind = $main, P, togglesplit # dwindle
-          bind = $main, SPACE, togglefloating
-          bind = $main SHIFT, E, exit
+          bind = $M, Q, killactive
+          bind = $M, F, fullscreen
+          bind = $M, P, togglesplit # dwindle
+          bind = $M, SPACE, togglefloating
+          bind = $M_SHIFT, E, exit
 
-          bind = $main, G, togglegroup
-          bind = $main SHIFT, G, changegroupactive
-          bind = $main, H, movefocus, l
-          bind = $main, L, movefocus, r
-          bind = $main, K, movefocus, u
-          bind = $main, J, movefocus, d
+          bind = $M, G, togglegroup
+          bind = $M_SHIFT, G, changegroupactive
+          bind = $M, H, movefocus, l
+          bind = $M, L, movefocus, r
+          bind = $M, K, movefocus, u
+          bind = $M, J, movefocus, d
 
-          bind = $main SHIFT, H, movewindow, l
-          bind = $main SHIFT, L, movewindow, r
-          bind = $main SHIFT, K, movewindow, u
-          bind = $main SHIFT, J, movewindow, d
+          bind = $M_SHIFT, H, movewindow, l
+          bind = $M_SHIFT, L, movewindow, r
+          bind = $M_SHIFT, K, movewindow, u
+          bind = $M_SHIFT, J, movewindow, d
 
-          bind = $main CTRL, H, resizeactive, -50 0
-          bind = $main CTRL, L, resizeactive, 50 0
-          bind = $main CTRL, K, resizeactive, 0 -50
-          bind = $main CTRL, J, resizeactive, 0 50
+          bind = $M_CTRL, H, resizeactive, -50 0
+          bind = $M_CTRL, L, resizeactive, 50 0
+          bind = $M_CTRL, K, resizeactive, 0 -50
+          bind = $M_CTRL, J, resizeactive, 0 50
 
-          bind = $main, 1, workspace, 1
-          bind = $main, 2, workspace, 2
-          bind = $main, 3, workspace, 3
-          bind = $main, 4, workspace, 4
-          bind = $main, 5, workspace, 5
-          bind = $main, 6, workspace, 6
-          bind = $main, 7, workspace, 7
-          bind = $main, 8, workspace, 8
-          bind = $main, 9, workspace, 9
-          bind = $main, 0, workspace, 10
+          bind = $M, 1, workspace, 1
+          bind = $M, 2, workspace, 2
+          bind = $M, 3, workspace, 3
+          bind = $M, 4, workspace, 4
+          bind = $M, 5, workspace, 5
+          bind = $M, 6, workspace, 6
+          bind = $M, 7, workspace, 7
+          bind = $M, 8, workspace, 8
+          bind = $M, 9, workspace, 9
+          bind = $M, 0, workspace, 10
 
-          bind = $main SHIFT, 1, movetoworkspace, 1
-          bind = $main SHIFT, 2, movetoworkspace, 2
-          bind = $main SHIFT, 3, movetoworkspace, 3
-          bind = $main SHIFT, 4, movetoworkspace, 4
-          bind = $main SHIFT, 5, movetoworkspace, 5
-          bind = $main SHIFT, 6, movetoworkspace, 6
-          bind = $main SHIFT, 7, movetoworkspace, 7
-          bind = $main SHIFT, 8, movetoworkspace, 8
-          bind = $main SHIFT, 9, movetoworkspace, 9
-          bind = $main SHIFT, 0, movetoworkspace, 10
+          bind = $M_SHIFT, 1, movetoworkspace, 1
+          bind = $M_SHIFT, 2, movetoworkspace, 2
+          bind = $M_SHIFT, 3, movetoworkspace, 3
+          bind = $M_SHIFT, 4, movetoworkspace, 4
+          bind = $M_SHIFT, 5, movetoworkspace, 5
+          bind = $M_SHIFT, 6, movetoworkspace, 6
+          bind = $M_SHIFT, 7, movetoworkspace, 7
+          bind = $M_SHIFT, 8, movetoworkspace, 8
+          bind = $M_SHIFT, 9, movetoworkspace, 9
+          bind = $M_SHIFT, 0, movetoworkspace, 10
 
-          bind = $main, mouse_down, workspace, e+1
-          bind = $main, mouse_up, workspace, e-1
-          bindm = $main, mouse:272, movewindow
-          bindm = $main, mouse:273, resizewindow
+          bind = $Ma, mouse_down, workspace, e+1
+          bind = $Ma, mouse_up, workspace, e-1
+          bindm = $M, mouse:272, movewindow
+          bindm = $M, mouse:273, resizewindow
         '';
       };
       home.packages = [

@@ -6,4 +6,5 @@ _: {
     graphics = "nvidia";
     cpu = "intel";
   };
+  desktop.shell.greeter = "none";
 }

@@ -52,7 +52,6 @@ in {
           # Cursor and wallpaper
           exec-once = hyprctl setcursor ${pointer.name} ${builtins.toString pointer.size}
           exec-once = ${exe pkgs.swaybg} -i ${../theme/current_wallpaper} -m fill
-          exec = ${exe shell.terminal}
 
           # General/eyecandy config
           general {

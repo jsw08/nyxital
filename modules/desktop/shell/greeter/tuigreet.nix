@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  inputs,
   pkgs,
   ...
 }: let
@@ -14,17 +13,18 @@
   mkIf = lib.mkIf;
   exe = lib.getExe;
 in {
-  config = mkIf (shell.greeter == pkgs.greetd.gtkgreet && builtins.elem device compDevices) {
+  config = mkIf (shell.greeter == pkgs.greetd.tuigreet && builtins.elem device compDevices) {
     services.greetd = {
       enable = true;
+      vt = 2;
       settings = {
         default_session = {
-          user = username;
-          command = "${exe pkgs.cage} ${exe pkgs.greetd.gtkgreet} ${exe wm}";
+          command = "${exe pkgs.greetd.tuigreet} --time --remember --user-menu --asterisks -c ${exe wm}";
+          user = "greeter";
         };
-        inital_settings = {
-          user = username;
+        initial_session = {
           command = "${exe wm}";
+          user = "${username}";
         };
       };
     };

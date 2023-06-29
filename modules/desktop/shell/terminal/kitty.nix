@@ -22,7 +22,10 @@ in {
       enableBashIntegration = true;
       enableZshIntegration = true;
     };
+
     settings = with colors; {
+      font_familiy = "JetBrainsMono Nerd Font";
+      font_size = 11;
       background = "#${base00}";
       foreground = "#${base05}";
       selection_background = "#${base05}";

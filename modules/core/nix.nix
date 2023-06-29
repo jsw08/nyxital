@@ -27,7 +27,7 @@ in {
   system = {
     autoUpgrade = {
       enable = true;
-      flake = "git+https://git.sr.ht/~jsw08/dotfiles";
+      flake = "git+https://github.com/jsw08/nyxital"; # The flake that the system should use to auto update.
     };
     stateVersion = mkDefault "23.05";
   };

@@ -8,23 +8,24 @@
   device = config.core.device;
   compDevices = ["laptop" "desktop"];
   shell = config.desktop.shell;
+  wm = config.desktop.wm;
   username = config.core.username;
 
   mkIf = lib.mkIf;
+  optStr = lib.optionalString;
+  exe = lib.getExe;
 
   hm = config.home-manager.users.${username};
   laptop = config.core.device == "laptop";
   bluetooth = config.core.bluetooth.enable;
+  hyprland = inputs.hyprland.packages.${pkgs.system};
   package =
-    if config.desktop.wm == inputs.hyprland.packages.${pkgs.system}.hyprland
-    then inputs.hyprland.packages.${pkgs.system}.waybar-hyprland
+    if wm == hyprland.hyprland
+    then hyprland.waybar-hyprland
     else pkgs.waybar;
-  runner = config.desktop.shell.runner;
-  terminal = config.desktop.shell.runner;
+  runner = shell.runner;
+  terminal = shell.terminal;
   inherit (hm.colorscheme) colors;
-
-  optStr = lib.optionalString;
-  exe = lib.getExe;
 in {
   imports = [inputs.home-manager.nixosModules.home-manager];
   config.home-manager.users.${username}.programs.waybar = mkIf (shell.bar == pkgs.waybar && builtins.elem device compDevices) {
@@ -40,8 +41,8 @@ in {
           "custom/runner"
           "custom/seperator"
         ];
-        modules-centre = [
-          "wlr/workpaces"
+        modules-center = [
+          (optStr (wm == hyprland.hyprland) "wlr/workspaces")
         ];
         modules-right = [
           "tray"
@@ -107,6 +108,8 @@ in {
           tooltip-format = "{volume}";
           on-click = "${exe pkgs.pulsemixer} --toggle-mute";
           on-click-right = "${exe terminal} ${optStr (terminal == pkgs.alacritty) "-s"} ${exe pkgs.pulsemixer}";
+          on-scroll-up = "${exe pkgs.pulsemixer} --change-volume +5";
+          on-scroll-down = "${exe pkgs.pulsemixer} --change-volume -5";
         };
         backlight = {
           rotate = 270;
@@ -129,14 +132,15 @@ in {
             ""
             ""
           ];
-          on-scroll-up = "light -A 1";
-          on-scroll-down = "light -U 1";
+          on-scroll-up = "${exe pkgs.brightnessctl} s 10%+";
+          on-scroll-down = "${exe pkgs.brightnessctl} s 10%-";
         };
         bluetooth = {
           rotate = 0;
           format-on = "󰂯";
           format-off = "󰂲";
           format-connected = "󰂱";
+          on-click = "${exe terminal} ${optStr (terminal == pkgs.alacritty) "-s"} ${exe pkgs.bluetuith}";
         };
         battery = {
           rotate = 0;
@@ -156,7 +160,7 @@ in {
         };
         "custom/power" = {
           rotate = 0;
-          format = "{} 󰐥 {}";
+          format = "󰐥";
           on-click = "${exe pkgs.wlogout}";
         };
       };
@@ -312,6 +316,7 @@ in {
         background: #${base02};
         border-radius: 0px 0px 10px 10px;
       }
-    '';
+
+    ''; #TODO: wlr workspaces style
   };
 }

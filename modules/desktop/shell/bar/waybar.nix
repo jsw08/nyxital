@@ -36,7 +36,7 @@ in {
       main = {
         position = "left";
         layer = "top";
-        width = 44;
+        width = 58;
         modules-left = [
           "custom/runner"
           "custom/seperator"

@@ -4,15 +4,14 @@
   lib,
   inputs,
   ...
-}:
-with lib; let
+}: let
   device = config.core.device;
   compDevices = ["laptop" "desktop"];
   username = config.core.username;
 
   mkIf = lib.mkIf;
 
-  hm = config.home-manager.users.${username}; 
+  hm = config.home-manager.users.${username};
   inherit (inputs.nix-colors.lib-contrib {inherit pkgs;}) vimThemeFromScheme;
 in {
   imports = [

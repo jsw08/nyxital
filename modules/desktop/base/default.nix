@@ -4,5 +4,10 @@ _: {
     ./polkit.nix
     ./fonts.nix
   ];
-  services.xserver.desktopManager.xterm.enable = false;
+  services = {
+    #TODO: Migrate udisks
+    xserver.desktopManager.xterm.enable = false;
+    udisks2.enable = true;
+    gvfs.enable = true;
+  };
 }

@@ -173,8 +173,10 @@ in {
           bindm = $M, mouse:273, resizewindow
         '';
       };
-      home.packages = [
+      home.packages = with pkgs; [
         grimblast
+        wl-clipboard
+        wlr-randr
       ];
     };
   };

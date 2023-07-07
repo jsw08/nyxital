@@ -16,7 +16,7 @@ in {
       passwordFile = config.age.secrets."${username}Pass".path; # Requires a secret named <yourUsername>Pass. You can generate a password file using `mkpasswd -m sha-512` and then encrypt it with agenix.
     };
     ${username} = {
-      initialPassword = "changeme"; #TODO: Agenix
+      initialPassword = "changeme";
       passwordFile = config.age.secrets."${username}Pass".path; # Requires a secret named <yourUsername>Pass. You can generate a password file using `mkpasswd -m sha-512` and then encrypt it with agenix.
 
       isNormalUser = true;
@@ -38,12 +38,12 @@ in {
       home.username = "${username}";
       home.homeDirectory = "/home/${username}/";
       home.stateVersion = config.system.stateVersion;
-      home.sessionVariables = {
-        #for some raeson not defined automatically smh
-        XDG_CONFIG_HOME = "/home/${username}/.config";
-        XDG_CACHE_HOME = "/home/${username}/.cache";
-        XDG_DATA_HOME = "/home/${username}/.local/share";
-        XDG_STATE_HOME = "/home/${username}/.local/state";
+      xdg = {
+        enable = true;
+        userDirs = {
+          enable = true;
+          createDirectories = true;
+        };
       };
 
       programs.home-manager.enable = true; # allows it to manage itself?

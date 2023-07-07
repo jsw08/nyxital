@@ -5,13 +5,13 @@
   ...
 }: let
   device = config.core.device;
-  #server = "server" == device;
-  server = true; # FIXME: REMOVE THIS, ONLY FOR DEBUGGING
+  server = "server" == device;
 
   mkIf = lib.mkIf;
 in {
   config.boot = {
-    kernelPackages = pkgs.linuxKernel.rtPackages.linux_rt_6_1;
+    #kernelPackages = pkgs.linuxKernel.linux_rt_6_1;
+    kernelPackages = pkgs.linuxPackages_zen;
     plymouth.enable = !server;
 
     kernelParams = mkIf (!server) ["quiet" "udev.log_level=3"];

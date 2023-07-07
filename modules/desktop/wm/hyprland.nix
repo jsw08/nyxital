@@ -113,7 +113,7 @@ in {
 
           # Config programs
           bind = $M, a, exec, ${exe shell.terminal} ${exe pkgs.pulsemixer}
-          bind = $M, n, exec, ${exe shell.terminal} ${exe pkgs.networkmanager}/bin/nmtui
+          bind = $M, n, exec, ${exe shell.terminal} ${pkgs.networkmanager}/bin/nmtui
           ${optStr bluetooth "bind = $M, b, exec, ${exe shell.terminal} ${exe pkgs.bluetuith}"}
 
           # Program binds

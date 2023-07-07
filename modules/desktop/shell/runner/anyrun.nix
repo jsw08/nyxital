@@ -26,19 +26,22 @@ in {
           symbols
           translate
         ];
-        width = {fraction = 0.3;};
-        position = "top";
-        verticalOffset = {absolute = 0;};
+        x = {fraction = 0.5;};
+        y = {absolute = 0;};
+        width = {absolute = 800;};
+        height = {absolute = 0;};
         hideIcons = false;
         ignoreExclusiveZones = false;
         layer = "overlay";
-        hidePluginInfo = false;
+        hidePluginInfo = true;
         closeOnClick = false;
         showResultsImmediately = false;
         maxEntries = null;
       };
-      extraCss = ''
-      '';
+      extraCss =
+        #TODO: Rice
+        ''
+        '';
     };
   };
 }

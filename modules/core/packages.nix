@@ -9,6 +9,7 @@
     curl
     w3m
     inputs.agenix.packages.${pkgs.system}.default
+    htop
   ];
-  environment.variables.EDITOR = "vi";
+  environment.variables.EDITOR = "nvim";
 }

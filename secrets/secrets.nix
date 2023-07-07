@@ -8,4 +8,6 @@ let
   hosts = [jsw-laptop];
 in {
   "jswPass.age".publicKeys = users ++ hosts;
+  "gh.age".publicKeys = users ++ hosts;
+  "nextcloud.age".publicKeys = users ++ hosts;
 }

@@ -4,5 +4,7 @@ _: {
     ./nvim.nix
     ./fish.nix
     ./starship.nix
+    ./gh.nix
+    ./steam.nix
   ];
 }

@@ -16,8 +16,9 @@ in {
   imports = [inputs.home-manager.nixosModules.home-manager];
   config.home-manager.users.${username}.programs.firefox = mkIf (shell.browser == pkgs.firefox-bin && builtins.elem device compDevices) {
     enable = true;
-    package = pkgs.wrapFirefox pkgs.firefox-esr-102-unwrapped {
+    package = pkgs.wrapFirefox pkgs.firefox-esr-115-unwrapped {
       extraPolicies = {
+        # You can find th policies here https://github.com/mozilla/policy-templates
         AutoAppUpdate = false;
         CaptivePortal = true;
         DisableFirefoxAccounts = true;
@@ -53,6 +54,8 @@ in {
         in
           mkForce {
             # Addon IDs are in manifest.json or manifest-firefox.json
+            # You can also find them with https://github.com/mkaply/queryamoid/releases
+            "{d7742d87-e61d-4b78-b8a1-b469842139fa}".install_url = "https://addons.mozilla.org/firefox/downloads/latest/vimium-ff/latest.xpi";
             "{446900e4-71c2-419f-a6a7-df9c091e268b}".install_url = "https://addons.mozilla.org/firefox/downloads/latest/bitwarden-password-manager/latest.xpi";
             "addon@darkreader.org".install_url = "https://addons.mozilla.org/firefox/downloads/latest/darkreader/latest.xpi";
             "uBlock0@raymondhill.net".install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
@@ -73,7 +76,8 @@ in {
 
           #TODO: "browser.startup.homepage" = "file://${./startpage.html}";
           "browser.uiCustomization.state" = ''
-            {"placements":{"widget-overflow-fixed-list":[],"unified-extensions-area":["_d7742d87-e61d-4b78-b8a1-b469842139fa_-browser-action","addon_darkreader_org-browser-action","2_0_disconnect_me-browser-action","user-agent-switcher_ninetailed_ninja-browser-action","_884679b9-5d6b-48b2-90a7-15ae26ce568a_-browser-action"],"nav-bar":["back-button","forward-button","stop-reload-button","urlbar-container","downloads-button","unified-extensions-button","cors-everywhere_spenibus-browser-action","_446900e4-71c2-419f-a6a7-df9c091e268b_-browser-action","ublock0_raymondhill_net-browser-action","_a6afa2be-9b78-4dba-9dda-d89e52b13b7d_-browser-action","_a6c4a591-f1b2-4f03-b3ff-767e5bedf4e7_-browser-action"],"toolbar-menubar":["menubar-items"],"TabsToolbar":["firefox-view-button","tabbrowser-tabs","new-tab-button","alltabs-button"],"PersonalToolbar":["personal-bookmarks"]},"seen":["save-to-pocket-button","developer-button","_d7742d87-e61d-4b78-b8a1-b469842139fa_-browser-action","_446900e4-71c2-419f-a6a7-df9c091e268b_-browser-action","ublock0_raymondhill_net-browser-action","addon_darkreader_org-browser-action","cors-everywhere_spenibus-browser-action","_a6afa2be-9b78-4dba-9dda-d89e52b13b7d_-browser-action","2_0_disconnect_me-browser-action","user-agent-switcher_ninetailed_ninja-browser-action","_a6c4a591-f1b2-4f03-b3ff-767e5bedf4e7_-browser-action","_884679b9-5d6b-48b2-90a7-15ae26ce568a_-browser-action"],"dirtyAreaCache":["nav-bar","PersonalToolbar","unified-extensions-area","toolbar-menubar","TabsToolbar"],"currentVersion":19,"newElementCount":4}            '';
+            {"placements":{"widget-overflow-fixed-list":[],"unified-extensions-area":["addon_darkreader_org-browser-action","_d7742d87-e61d-4b78-b8a1-b469842139fa_-browser-action","skipredirect_sblask-browser-action","_b86e4813-687a-43e6-ab65-0bde4ab75758_-browser-action","sponsorblocker_ajay_app-browser-action","_74145f27-f039-47ce-a470-a662b129930a_-browser-action","dontfuckwithpaste_raim_ist-browser-action","7esoorv3_alefvanoon_anonaddy_me-browser-action","queryamoid_kaply_com-browser-action"],"nav-bar":["back-button","forward-button","urlbar-container","save-to-pocket-button","downloads-button","fxa-toolbar-menu-button","ublock0_raymondhill_net-browser-action","_446900e4-71c2-419f-a6a7-df9c091e268b_-browser-action","unified-extensions-button"],"toolbar-menubar":["menubar-items"],"TabsToolbar":["firefox-view-button","tabbrowser-tabs","_c607c8df-14a7-4f28-894f-29e8722976af_-browser-action","new-tab-button","alltabs-button"],"PersonalToolbar":["personal-bookmarks"]},"seen":["queryamoid_kaply_com-browser-action","dontfuckwithpaste_raim_ist-browser-action","_d7742d87-e61d-4b78-b8a1-b469842139fa_-browser-action","7esoorv3_alefvanoon_anonaddy_me-browser-action","addon_darkreader_org-browser-action","skipredirect_sblask-browser-action","ublock0_raymondhill_net-browser-action","_446900e4-71c2-419f-a6a7-df9c091e268b_-browser-action","_b86e4813-687a-43e6-ab65-0bde4ab75758_-browser-action","sponsorblocker_ajay_app-browser-action","_c607c8df-14a7-4f28-894f-29e8722976af_-browser-action","_74145f27-f039-47ce-a470-a662b129930a_-browser-action","developer-button"],"dirtyAreaCache":["unified-extensions-area","nav-bar","TabsToolbar","widget-overflow-fixed-list","toolbar-menubar","PersonalToolbar"],"currentVersion":19,"newElementCount":8}
+          '';
 
           "extensions.update.enabled" = false;
           "intl.locale.matchOS" = true;

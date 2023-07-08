@@ -9,6 +9,7 @@
   username = config.core.username;
 
   mkIf = lib.mkIf;
+  mkOut = config.home-manager.users.${username}.lib.file.mkOutOfStoreSymlink;
 in {
   imports = [inputs.home-manager.nixosModules.home-manager];
   home-manager.users.${username} = mkIf (builtins.elem device compDevices) {
@@ -16,6 +17,6 @@ in {
       enable = true;
       enableGitCredentialHelper = true;
     };
-    xdg.configFile."gh/hosts.yml".source = config.age.secrets."gh".path;
+    home.file.".config/gh/hosts.yml".source = mkOut config.age.secrets."gh".path;
   };
 }

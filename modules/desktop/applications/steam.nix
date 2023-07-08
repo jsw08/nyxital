@@ -6,12 +6,10 @@
 }: let
   device = config.core.device;
   compDevices = ["laptop" "desktop"];
-  cfg = config.dekstop.steam;
+  cfg = config.desktop.steam;
 
   mkIf = lib.mkIf;
   mkEnableOption = lib.mkEnableOption;
-
-  inherit (config.home-manager.users.${username}.colorscheme) colors;
 in {
   imports = [inputs.home-manager.nixosModules.home-manager];
   options.desktop.steam = mkEnableOption "steam";

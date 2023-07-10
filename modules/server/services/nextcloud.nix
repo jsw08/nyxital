@@ -25,6 +25,7 @@ in {
         package = pkgs.nextcloud27;
         home = "/srv/nextcloud";
         maxUploadSize = "12G";
+        notify_push.enable = true;
 
         hostName = domain;
         autoUpdateApps = {
@@ -45,9 +46,11 @@ in {
             else "https";
           extraTrustedDomains = [
             "https://${domain}"
+            "192.168.1.111"
           ];
           trustedProxies = [
             "https://${domain}"
+            "http://192.168.1.111"
           ];
           adminuser = "jsw";
           adminpassFile = config.age.secrets.nextcloud.path;
@@ -68,7 +71,7 @@ in {
             "memcache.locking" = "\OC\Memcache\Redis";
             "memcache.distributed" = "\OC\Memcache\Redis";
             "enabledPreviewProviders" = "['OC\Preview\MP3','OC\Preview\TXT','OC\Preview\MarkDown','OC\Preview\OpenDocument','OC\Preview\Krita','OC\Preview\Imaginary']";
-            "preview_imaginary_url" = "http://localhost:9010";
+            "preview_imaginary_url" = "http://localhost:9010"; #FIXME:
           }
           // (optAttrs (!devMode) {
             "overwritehost" = domain;
@@ -99,15 +102,23 @@ in {
               addr = "127.0.0.1";
               port = 9000;
             }
+            {
+              addr = "192.168.1.111";
+              port = 80;
+            }
           ];
         };
       };
       imaginary = {
-        enable = false;
+        enable = true; #FIXME:
         port = 9010;
-        settings = {cpu = "4";}; # Won't run without a setting set for some reason.
+        settings = {
+          #cpu = "4";
+          return-size = true;
+        }; # Won't run without a setting set for some reason.
       };
     };
     environment.systemPackages = [pkgs.pandoc];
+    networking.firewall.allowedTCPPorts = [80];
   };
 }

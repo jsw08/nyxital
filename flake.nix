@@ -22,7 +22,7 @@
     # Hyprland & Hyprland Contrib repos
     hyprland = {
       url = "github:hyprwm/Hyprland";
-      #inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     hyprland-contrib = {
       url = "github:hyprwm/contrib";

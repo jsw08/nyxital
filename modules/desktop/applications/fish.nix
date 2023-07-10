@@ -30,8 +30,8 @@ in {
         ls = "${exa} --icons";
       };
       functions = {
-        shell = "nix shell nixpkgs#$argv";
-        run = "nix run nixpkgs#$argv";
+        shell = "NIXPKGS_ALLOW_UNFREE=1 nix shell --impure nixpkgs#$argv";
+        run = "NIXPKGS_ALLOW_UNFREE=1 nix run --impure nixpkgs#$argv";
       };
       interactiveShellInit = with colors; ''
         ${exe pkgs.pfetch}

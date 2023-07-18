@@ -38,7 +38,7 @@ in {
         configureRedis = true; # For za speeeeeed
 
         config = {
-          dbtype = "pgsql";
+          dbtype = "mysql";
           overwriteProtocol =
             # Else can't access on localhost
             if devMode

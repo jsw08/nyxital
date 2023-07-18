@@ -22,7 +22,7 @@ in {
       isNormalUser = true;
       home = "/home/${username}/";
       description = "${username}";
-      extraGroups = ["wheel" "networkmanager"];
+      extraGroups = ["wheel" "networkmanager" "dialout"];
       shell = pkgs.fish; #TODO: Replace with currently selected shell
     };
   };

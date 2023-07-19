@@ -24,13 +24,7 @@ in {
     #overlays = []; TODO: rust
   };
 
-  system = {
-    autoUpgrade = {
-      enable = true;
-      flake = "git+https://github.com/jsw08/nyxital"; # The flake that the system should use to auto update.
-    };
-    stateVersion = mkDefault "23.05";
-  };
+  system.stateVersion = mkDefault "23.05";
 
   nix = {
     registry = mappedRegistry // {default = mappedRegistry.nixpkgs;}; # Make the `nix` command use the same nixpkgs as this flake.
